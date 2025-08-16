@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "http.h"   // include your header
+#include "http.h"
 
-// forward declarations from http_parser.c
+// functions from http_parser.c
 struct http_request parse_http_request(char *raw);
 void free_http_request(struct http_request *req);
 
@@ -16,10 +16,10 @@ int main() {
         "Accept: text/html\r\n"
         "\r\n";
 
-    // Parse request
+    // Parse the HTTP request
     struct http_request req = parse_http_request(raw_request);
 
-    // Print parsed request line
+    // Print request line
     printf("Method:  %s\n", req.method);
     printf("Path:    %s\n", req.path);
     printf("Version: %s\n", req.version);
@@ -35,7 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
