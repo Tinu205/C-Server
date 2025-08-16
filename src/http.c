@@ -9,22 +9,8 @@
 
 #include <string.h>
 #include "http.h"
+#include <stdlib.h>
 
-
-
-struct http_header{
-    char *key;
-    char *value;
-};
-
-struct http_request {
-    char *method;
-    char *path;
-    char *version;
-    struct http_header * header;
-    int header_count;
-    //char *body;
-};
 
 
 void add_header(struct http_request *req,const char *key,const char *value){
@@ -45,13 +31,13 @@ struct http_request parse_http_request(char *raw) {
     }
     token = strtok(NULL,"\r\n");
     while(token != NULL){
-        char * colon_pos = strchr(token,":");
+        char * colon_pos = strchr(token,':');
         if(colon_pos != NULL){
             *colon_pos = '\0';
             char *key = token;
             char *value = colon_pos+1;
             while(*value == ' ') value ++;
-            add_header(request,key,value);
+            add_header(&request,key,value);
         }
         token = strtok(NULL,"\r\n");
     }
